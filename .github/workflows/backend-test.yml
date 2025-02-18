@@ -1,6 +1,11 @@
 name: Testing the project
 
-on: [push]
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - avalon-backend/**
 
 jobs:
   Python-Tests:
