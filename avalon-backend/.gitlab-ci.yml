@@ -1,0 +1,26 @@
+image: python:3.8.2-slim
+
+variables:
+  PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
+
+cache:
+  paths:
+    - .cache/pip
+
+before_script:
+  - apt-get update -qy
+
+stages:
+  - Test and Lint
+  - Deploy
+
+lint:
+  stage: Test and Lint
+  script:
+    - pip3 install -r requirements.txt
+    - pip3 install flake8 coverage
+    - coverage run -m pytest .
+    - coverage report -m
+    - flake8 --ignore=E501,F401,E402 .
+  only:
+    - master
